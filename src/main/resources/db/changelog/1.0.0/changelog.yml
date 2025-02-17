@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.0
+      author: fpamula
+      changes:
+        - createTable:
+            tableName: CHAT
+            columns:
+              - column:
+                  name: id
+                  type: char(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_a
+                  type: char(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_b
+                  type: char(36)
+                  constraints:
+                    nullable: false
