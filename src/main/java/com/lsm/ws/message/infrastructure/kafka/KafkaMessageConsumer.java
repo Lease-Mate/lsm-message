@@ -1,5 +1,6 @@
 package com.lsm.ws.message.infrastructure.kafka;
 
+import com.lsm.ws.message.domain.message.MessageRepository;
 import com.lsm.ws.message.infrastructure.kafka.dto.MessageDto;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
@@ -13,10 +14,13 @@ public class KafkaMessageConsumer {
 
     private final SimpMessageSendingOperations messagingTemplate;
     private final SimpUserRegistry userRegistry;
+    private final MessageRepository messageRepository;
 
-    public KafkaMessageConsumer(SimpMessageSendingOperations messagingTemplate, SimpUserRegistry userRegistry) {
+    public KafkaMessageConsumer(SimpMessageSendingOperations messagingTemplate, SimpUserRegistry userRegistry,
+                                MessageRepository messageRepository) {
         this.messagingTemplate = messagingTemplate;
         this.userRegistry = userRegistry;
+        this.messageRepository = messageRepository;
     }
 
     @KafkaListener(topics = "${kafka.topics.message}", groupId = "chat")
@@ -28,5 +32,10 @@ public class KafkaMessageConsumer {
                 }
             }
         }
+    }
+
+    @KafkaListener(topics = "${kafka.topics.message}", groupId = "persist")
+    public void listenPersist(MessageDto messageDto) {
+        messageRepository.save(messageDto.toMessage());
     }
 }

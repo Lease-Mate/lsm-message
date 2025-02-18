@@ -7,4 +7,6 @@ public interface ChatRepository {
     Optional<Chat> findChatWithUsers(String userAId, String userBId);
 
     Chat save(Chat newChat);
+
+    Optional<Chat> findById(String chatId);
 }

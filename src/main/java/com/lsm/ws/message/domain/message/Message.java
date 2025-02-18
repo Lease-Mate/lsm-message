@@ -4,30 +4,33 @@ import java.time.LocalDateTime;
 
 public final class Message {
 
+    private String id;
     private String chatId;
     private String sender;
     private String content;
     private LocalDateTime timestamp;
     private String sessionId;
-    private MessageType messageType;
 
     public Message() {
     }
 
     public Message(
-            String chatId,
+            String id, String chatId,
             String sender,
             String content,
             LocalDateTime timestamp,
-            String sessionId,
-            MessageType messageType
+            String sessionId
     ) {
+        this.id = id;
         this.chatId = chatId;
         this.sender = sender;
         this.content = content;
         this.timestamp = timestamp;
         this.sessionId = sessionId;
-        this.messageType = messageType;
+    }
+
+    public String id() {
+        return id;
     }
 
     public String chatId() {
@@ -56,13 +59,5 @@ public final class Message {
 
     public void setSessionId(String sessionId) {
         this.sessionId = sessionId;
-    }
-
-    public MessageType messageType() {
-        return messageType;
-    }
-
-    public void setMessageType(MessageType messageType) {
-        this.messageType = messageType;
     }
 }

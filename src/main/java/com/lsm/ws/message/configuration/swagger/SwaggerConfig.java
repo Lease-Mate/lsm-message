@@ -28,7 +28,7 @@ public class SwaggerConfig {
     public OpenAPI openAPI() {
         var openApi = new OpenAPI().info(new Info().description("LeaseMate message microservice")
                                                    .title("Message microservice"))
-                                   .addServersItem(new Server().url("/"));
+                                   .addServersItem(new Server().url(""));
         addAuthBearer(openApi);
         return openApi;
     }

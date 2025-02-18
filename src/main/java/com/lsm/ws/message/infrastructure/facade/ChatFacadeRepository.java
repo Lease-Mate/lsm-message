@@ -32,6 +32,12 @@ public class ChatFacadeRepository implements ChatRepository {
         return chatJpaRepository.save(entity).toChat();
     }
 
+    @Override
+    public Optional<Chat> findById(String chatId) {
+        return chatJpaRepository.findById(chatId)
+                                .map(ChatEntity::toChat);
+    }
+
     Specification<ChatEntity> hasUsers(String userAId, String userBId) {
         Specification<ChatEntity> userA = (root, query, criteriaBuilder) -> criteriaBuilder.or(
                 criteriaBuilder.equal(root.get("userA"), userAId),

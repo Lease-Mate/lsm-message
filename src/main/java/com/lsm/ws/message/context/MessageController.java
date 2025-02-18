@@ -7,6 +7,9 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 @Controller
 public class MessageController {
 
@@ -20,6 +23,8 @@ public class MessageController {
 
     @MessageMapping("/chat.send-message")
     public void sendMessage(@Payload MessageDto messageDto, SimpMessageHeaderAccessor headerAccessor) {
+        messageDto.timestamp = LocalDateTime.now();
+        messageDto.id = UUID.randomUUID().toString();
         var chatMessage = messageDto.toMessage();
         chatMessage.setSessionId(headerAccessor.getSessionId());
         messageService.send(chatMessage);

@@ -1,0 +1,37 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.1
+      author: fpamula
+      changes:
+        - createTable:
+            tableName: MESSAGE
+            columns:
+              - column:
+                  name: id
+                  type: char(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: chat_id
+                  type: char(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: sender_id
+                  type: char(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: content
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: timestamp
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: session_id
+                  type: varchar(40)
