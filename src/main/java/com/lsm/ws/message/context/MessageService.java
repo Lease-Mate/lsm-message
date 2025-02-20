@@ -7,6 +7,8 @@ import com.lsm.ws.message.domain.message.ChatRepository;
 import com.lsm.ws.message.domain.message.Message;
 import com.lsm.ws.message.domain.message.MessagePublisher;
 import com.lsm.ws.message.domain.message.MessageRepository;
+import com.lsm.ws.message.domain.message.UserChat;
+import com.lsm.ws.message.infrastructure.rest.PaginationSpecification;
 import com.lsm.ws.message.infrastructure.rest.context.RequestContext;
 import org.springframework.stereotype.Service;
 
@@ -60,6 +62,12 @@ public class MessageService {
 
         userAccessValidator.validateAccess(chat);
 
-        return messageRepository.getByChatId(chatId, pagination);
+        return messageRepository.getMessagesByChatId(chatId, pagination);
+    }
+
+    public List<UserChat> getChats(PaginationSpecification paginationSpecification) {
+        var chats = chatRepository.getByUserId(requestContext.userId(), paginationSpecification);
+        return chats.stream().map(chat -> chat.toUserChat(requestContext.userId()))
+                    .toList();
     }
 }

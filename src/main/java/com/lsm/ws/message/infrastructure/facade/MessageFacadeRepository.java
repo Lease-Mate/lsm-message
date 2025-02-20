@@ -30,7 +30,7 @@ public class MessageFacadeRepository implements MessageRepository {
     }
 
     @Override
-    public List<Message> getByChatId(String chatId, Pagination pagination) {
+    public List<Message> getMessagesByChatId(String chatId, Pagination pagination) {
         var spec = Specification.where(hasChatId(chatId));
         var pageable = PageRequest.of(
                 pagination.getPage() - 1,

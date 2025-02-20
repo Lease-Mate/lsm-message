@@ -1,6 +1,7 @@
 package com.lsm.ws.message.context;
 
 import com.lsm.ws.message.context.dto.IdWrapperDto;
+import com.lsm.ws.message.domain.message.UserChat;
 import com.lsm.ws.message.infrastructure.kafka.dto.MessageDto;
 import com.lsm.ws.message.infrastructure.rest.PaginationSpecification;
 import io.swagger.v3.oas.annotations.Operation;
@@ -49,5 +50,13 @@ public class MessageEndpoint {
         var messages = messageService.getMessages(chatId, paginationSpecification);
         return ResponseEntity.ok(messages.stream().map(MessageDto::from)
                                          .toList());
+    }
+
+    @Operation(summary = "Pozyskaj czaty", description = "Zwraca wszystkie czaty użytkownika, wymaga JWT")
+    @GetMapping("/chat/all")
+    public ResponseEntity<List<UserChat>> getAllChats(@ParameterObject
+                                                      PaginationSpecification paginationSpecification) {
+        var chats = messageService.getChats(paginationSpecification);
+        return ResponseEntity.ok(chats);
     }
 }
